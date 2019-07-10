@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="demo">
+    <h2>Search Reviews</h2>
+    <input type="text" name="keyword" id="keyword"><button type="button" onclick="loadDoc()">Search</button>
+</div>
+
+<script>
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var reviews = JSON.parse(this.responseText);
+
+      result = '<table border="1"> <TR><TD> id </TD> <TD>text</TD></TR>'
+
+      for( r in reviews) {
+         result += "<TR><TD> " + reviews[r].id + "</TD>";
+         result += "<TD> " + reviews[r].review + "</TD></TR>";
+      }
+      result += "</Table>";
+      document.getElementById("demo").innerHTML = result;
+    }
+  };
+  xhttp.open("GET", "listbykeyword?key=" + document.getElementById("keyword").value, true);
+  xhttp.send();
+}
+</script>
+</body>
+</html>

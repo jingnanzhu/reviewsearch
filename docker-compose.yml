@@ -1,0 +1,30 @@
+version: '2'
+services:
+  reviewsearch:
+    image: review-search:latest
+    container_name: reviewserver
+    build:
+      context: ./backend/review-search
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      samplenet:
+        aliases:
+          - "reviewserver"
+ 
+  mysql
+    image: mysql-db:latest
+    container_name: mysqldb
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    ports:
+      - "33061:3306"
+    networks:
+      - samplenet
+ 
+networks:
+  samplenet:
+    driver: bridge
+
